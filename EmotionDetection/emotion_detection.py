@@ -20,6 +20,15 @@ def emotion_detector(text_to_analyze):
     #Parse the JSON response from the API call.
     formatted_response = json.loads(response.text)
 
+    #Handle blank entries from users. Return all key values as none.
+    if response.status_code == 400:
+        return {'anger' : None,
+        'disgust' : None,
+        'fear' : None,
+        'joy' : None,
+        'sadness' : None,
+        'dominant_emotion' : None}
+
     #Extract emotion scores.
     emotion_predictions = formatted_response['emotionPredictions'][0]
     anger_score = emotion_predictions['emotion']['anger']
